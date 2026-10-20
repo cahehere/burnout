@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#2f6251" />
+  <meta name="description" content="3분 안에 확인하는 직장인 번아웃 셀프 체크 서비스" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="숨 고르기" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <title>숨 고르기 — 직장인 번아웃 체크</title>
+  <style>
+    :root { --ink:#24302d; --muted:#697572; --paper:#f8f7f2; --card:#fffdf8; --line:#e5e7df; --sage:#9ab6a3; --deep:#2f6251; --yellow:#f2c778; --coral:#e99073; --shadow:0 18px 55px rgba(52,72,62,.10); }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); color:var(--ink); background:var(--paper); font-family: Inter, Pretendard, "Noto Sans KR", system-ui, sans-serif; line-height:1.55; -webkit-tap-highlight-color:transparent; }
+    button { font:inherit; cursor:pointer; }
+    .shell { max-width:1160px; margin:auto; padding:24px 28px 72px; }
+    header { display:flex; align-items:center; justify-content:space-between; padding:8px 0 42px; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:-.04em; font-size:20px; }
+    .brand-mark { width:31px; height:31px; border-radius:11px 11px 11px 3px; background:var(--deep); position:relative; }
+    .brand-mark:after { content:""; position:absolute; width:10px; height:10px; border:2px solid #e8f0e9; border-radius:50%; left:8px; top:7px; }
+    .privacy { font-size:12px; color:var(--muted); }
+    .hero { display:grid; grid-template-columns:1.08fr .92fr; gap:42px; align-items:center; min-height:430px; }
+    .eyebrow { color:var(--deep); font-size:13px; font-weight:800; letter-spacing:.08em; margin:0 0 17px; }
+    h1 { font-size:clamp(42px,6vw,72px); line-height:1.05; letter-spacing:-.07em; margin:0 0 24px; max-width:650px; }
+    h1 em { color:var(--deep); font-style:normal; }
+    .hero-copy { color:var(--muted); font-size:18px; max-width:520px; margin:0 0 31px; letter-spacing:-.03em; }
+    .primary { border:0; background:var(--deep); color:white; border-radius:15px; padding:16px 24px; font-weight:800; box-shadow:0 8px 20px rgba(47,98,81,.18); transition:.2s; }
+    .primary:hover { transform:translateY(-2px); background:#245543; }
+    .secondary { border:1px solid var(--line); background:transparent; color:var(--ink); border-radius:15px; padding:15px 21px; font-weight:700; }
+    .hero-art { min-height:320px; border-radius:34px; background:#e4eee7; position:relative; overflow:hidden; }
+    .sun { position:absolute; width:170px; height:170px; border-radius:50%; background:#f4cc86; right:72px; top:35px; }
+    .hill { position:absolute; border-radius:50% 50% 0 0; width:590px; height:230px; left:-65px; bottom:-84px; background:#8fb29b; transform:rotate(-6deg); }
+    .hill.two { background:#c3d8c2; left:145px; bottom:-103px; transform:rotate(9deg); }
+    .person { position:absolute; width:82px; height:118px; left:48%; bottom:89px; background:#f4eee3; border-radius:44px 44px 18px 18px; z-index:2; }
+    .person:before { content:""; position:absolute; width:57px; height:57px; background:#d88c69; border-radius:50%; top:-38px; left:13px; }
+    .leaf { position:absolute; width:84px; height:42px; border-radius:100% 0; background:#6d967e; transform:rotate(-32deg); right:22px; bottom:44px; }
+    .intro-note { position:absolute; left:24px; top:24px; background:rgba(255,253,248,.83); backdrop-filter:blur(7px); padding:12px 15px; border-radius:14px; font-size:13px; font-weight:700; }
+    .section { margin-top:70px; }
+    .section-head { display:flex; justify-content:space-between; align-items:end; margin-bottom:18px; }
+    h2 { font-size:28px; letter-spacing:-.05em; margin:0; }
+    .muted { color:var(--muted); }
+    .feature-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .feature { background:var(--card); border:1px solid var(--line); border-radius:22px; padding:24px; min-height:150px; }
+    .feature .icon { font-size:28px; margin-bottom:20px; }
+    .feature h3 { margin:0 0 7px; font-size:17px; letter-spacing:-.04em; }
+    .feature p { margin:0; color:var(--muted); font-size:14px; }
+    #check { display:none; max-width:680px; margin:35px auto 0; }
+    .check-card { background:var(--card); border:1px solid var(--line); border-radius:28px; padding:30px; box-shadow:var(--shadow); }
+    .progress-row { display:flex; justify-content:space-between; font-size:13px; color:var(--muted); margin-bottom:11px; }
+    .progress { height:7px; background:#edf0e9; border-radius:99px; overflow:hidden; margin-bottom:34px; }
+    .progress i { display:block; width:12.5%; height:100%; background:var(--deep); border-radius:99px; transition:.3s; }
+    .question { font-size:27px; line-height:1.3; letter-spacing:-.05em; margin:0 0 25px; }
+    .answers { display:grid; gap:10px; }
+    .answer { text-align:left; padding:17px 18px; border:1px solid var(--line); background:#fff; border-radius:15px; color:var(--ink); font-weight:600; transition:.18s; }
+    .answer:hover { border-color:var(--sage); background:#f4f8f3; }
+    .answer.selected { border:2px solid var(--deep); background:#eff6ef; padding:16px 17px; }
+    .check-actions { display:flex; justify-content:space-between; margin-top:24px; }
+    .result { display:none; text-align:center; }
+    .result-badge { display:inline-block; background:#eef4ed; color:var(--deep); border-radius:99px; padding:7px 13px; font-weight:800; font-size:13px; margin-bottom:15px; }
+    .traffic-light { display:flex; flex-direction:column; align-items:flex-start; gap:9px; width:230px; margin:4px auto 24px; padding:14px 18px; border-radius:22px; background:#f5f6f0; }
+    .traffic-light span { position:relative; display:block; width:38px; height:38px; border-radius:50%; opacity:.22; box-shadow:inset 0 0 0 1px rgba(36,48,45,.08); transition:.25s; }
+    .traffic-light span:after { content:attr(data-label); position:absolute; left:56px; top:50%; transform:translateY(-50%); width:145px; color:#697572; font-size:13px; font-weight:700; white-space:nowrap; opacity:.7; }
+    .traffic-light span.active { opacity:1; transform:scale(1.15); box-shadow:0 0 0 6px rgba(47,98,81,.10), 0 4px 12px rgba(47,98,81,.15); }
+    .traffic-light span.active:after { color:var(--ink); opacity:1; font-weight:900; }
+    .traffic-light .s1 { background:#5ca875; }.traffic-light .s2 { background:#b7c95a; }.traffic-light .s3 { background:#f0c75e; }.traffic-light .s4 { background:#ed975d; }.traffic-light .s5 { background:#d96961; }
+    .score { font-size:56px; line-height:1; letter-spacing:-.07em; margin:4px 0 10px; }
+    .result h2 { margin-bottom:10px; }
+    .result-text { color:var(--muted); margin:0 auto 25px; max-width:470px; }
+    .advice { text-align:left; border-top:1px solid var(--line); padding-top:22px; margin-top:24px; }
+    .advice h3 { font-size:16px; margin:0 0 12px; }
+    .advice-item { display:flex; gap:10px; padding:10px 0; font-size:14px; }
+    .advice-item span { color:var(--deep); font-weight:900; }
+    footer { margin-top:80px; text-align:center; font-size:12px; color:var(--muted); }
+    @media (max-width:760px) { .shell{padding:18px 18px 52px}.hero{grid-template-columns:1fr;gap:30px}.hero-art{min-height:250px}.feature-grid{grid-template-columns:1fr}.section{margin-top:52px} header{padding-bottom:28px}.privacy{display:none}.check-card{padding:22px 18px}.question{font-size:23px} }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header><div class="brand"><span class="brand-mark"></span>숨 고르기</div><div class="privacy">결과는 저장되지 않아요 · 3분 셀프 체크</div></header>
+    <section class="hero" id="home">
+      <div><p class="eyebrow">WORKPLACE WELLBEING CHECK</p><h1>요즘 나,<br><em>괜찮은 걸까?</em></h1><p class="hero-copy">바쁜 일상 속에서 잠깐 멈춰 지금의 나를 살펴보세요. 이 체크는 진단이 아니라, 회복을 시작하기 위한 작은 신호등입니다.</p><button class="primary" id="startBtn">3분 체크 시작하기 <span aria-hidden="true">→</span></button></div>
+      <div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="intro-note">오늘의 나를 돌보는 시간</div><div class="person"></div><div class="leaf"></div><div class="hill"></div><div class="hill two"></div></div>
+    </section>
+    <section class="section" id="features"><div class="section-head"><div><p class="eyebrow">HOW IT WORKS</p><h2>무겁지 않게, 솔직하게</h2></div><span class="muted">최근 2주를 떠올려 주세요</span></div><div class="feature-grid"><article class="feature"><div class="icon">◌</div><h3>간단한 질문 8개</h3><p>최근 나의 에너지와 업무 감각을 돌아봅니다.</p></article><article class="feature"><div class="icon">◒</div><h3>한눈에 보는 결과</h3><p>현재 상태를 낮음·주의·높음 세 단계로 확인합니다.</p></article><article class="feature"><div class="icon">✦</div><h3>오늘의 회복 가이드</h3><p>지금 나에게 필요한 작고 현실적인 행동을 제안합니다.</p></article></div></section>
+    <section id="check" class="section"><div class="check-card"><div id="quiz"><div class="progress-row"><span id="stepText">1 / 8</span><span>최근 2주 기준 · 5점 척도</span></div><div class="progress"><i id="bar"></i></div><h2 class="question" id="question"></h2><div class="answers" id="answers"></div><div class="check-actions"><button class="secondary" id="backBtn">이전</button><button class="primary" id="nextBtn" disabled>다음</button></div></div><div class="result" id="result"><span class="result-badge" id="badge">현재 상태</span><div class="traffic-light" aria-label="번아웃 5단계 신호등"><span class="s1" data-label="1단계 · 안정"></span><span class="s2" data-label="2단계 · 관심"></span><span class="s3" data-label="3단계 · 주의"></span><span class="s4" data-label="4단계 · 경고"></span><span class="s5" data-label="5단계 · 도움 필요"></span></div><div class="score" id="score">0점</div><h2 id="resultTitle"></h2><p class="result-text" id="resultText"></p><div class="advice"><h3>오늘부터 해볼 수 있는 것</h3><div id="adviceList"></div></div><button class="primary" id="restartBtn">다시 체크하기</button></div></div></section>
+    <footer>이 서비스는 의료적 진단을 제공하지 않습니다. 일상에 큰 어려움이 지속된다면 전문가의 도움을 받아보세요.</footer>
+  </main>
+  <script>
+    const questions = [
+      '아침에 일어나도 피로가 쉽게 가시지 않았나요?', '일을 시작하기 전부터 부담감이나 지침을 느꼈나요?', '업무에 예전만큼 의미나 흥미를 느끼기 어려웠나요?', '사소한 일에도 예민해지거나 냉소적으로 반응했나요?', '업무에 집중하기 어렵고 실수가 늘었나요?', '퇴근 후에도 업무 생각이 계속 이어졌나요?', '휴식이나 취미를 가져도 충분히 회복되지 않았나요?', '내가 일을 잘 해내고 있다는 감각이 줄어들었나요?'
+    ];
+    const options = ['전혀 그렇지 않다','그렇지 않은 편이다','가끔 그렇다','자주 그렇다','항상 그렇다'];
+    let current=0, answers=Array(questions.length).fill(null);
+    const $=id=>document.getElementById(id);
+    function render(){ $('question').textContent=questions[current]; $('stepText').textContent=`${current+1} / ${questions.length}`; $('bar').style.width=`${((current+1)/questions.length)*100}%`; $('answers').innerHTML=options.map((x,i)=>`<button class="answer ${answers[current]===i?'selected':''}" data-value="${i}">${x}</button>`).join(''); $('nextBtn').disabled=answers[current]===null; $('nextBtn').textContent=current===questions.length-1?'결과 보기':'다음'; $('backBtn').style.visibility=current?'visible':'hidden'; document.querySelectorAll('.answer').forEach(b=>b.onclick=()=>{answers[current]=+b.dataset.value;render()}); }
+    function showResult(){ const score=answers.reduce((a,b)=>a+b,0); const stage=score<=6?1:score<=12?2:score<=19?3:score<=25?4:5; let title,text,badge,advice; const stages={1:{badge:'1단계 · 초록 신호',title:'지금은 괜찮은 편이에요',text:'현재 큰 번아웃 신호는 두드러지지 않아요. 지금의 회복 습관을 작게라도 이어가 보세요.',advice:['일과 휴식의 경계를 오늘도 지켜보기','이번 주 나를 기분 좋게 한 순간 하나 기록하기','괜찮은 날에도 10분의 빈 시간을 남겨두기']},2:{badge:'2단계 · 연두 신호',title:'가벼운 피로가 쌓이고 있어요',text:'아직 크게 걱정할 단계는 아니지만, 작은 피로 신호를 놓치지 않는 것이 좋아요.',advice:['오늘 꼭 하지 않아도 되는 일 하나 미루기','점심시간 10분은 화면 없이 보내기','수면 시간을 30분 더 확보하기']},3:{badge:'3단계 · 노랑 신호',title:'회복을 조금 더 챙겨주세요',text:'에너지가 줄어들고 있다는 신호가 보여요. 모든 것을 해결하려 하기보다, 한 가지 부담부터 덜어보세요.',advice:['업무 우선순위를 다시 정리하기','믿을 수 있는 사람에게 요즘 상태 말하기','퇴근 후 업무 알림을 잠시 끄기']},4:{badge:'4단계 · 주황 신호',title:'혼자 버티지 말고 조정이 필요해요',text:'번아웃 신호가 여러 영역에서 나타나고 있어요. 업무량과 휴식에 적극적인 조정이 필요합니다.',advice:['가능하다면 업무량과 우선순위를 상의하기','오늘 한 사람에게 “요즘 힘들다”고 알리기','상담센터 등 전문 도움 알아보기']},5:{badge:'5단계 · 빨간 신호',title:'전문가의 도움을 권해요',text:'지금은 혼자 견디기보다 충분한 휴식과 전문가의 도움을 우선해 주세요. 일상 기능이 무너지거나 위급한 생각이 든다면 즉시 주변 사람과 전문기관에 연락하세요.',advice:['오늘 가까운 사람에게 현재 상태 알리기','업무 중단·휴식 가능 여부를 상담하기','정신건강의학과 또는 지역 상담센터 이용하기']}}[stage]; $('badge').textContent=stages.badge;$('score').textContent=`${score}점`; $('resultTitle').textContent=stages.title;$('resultText').textContent=stages.text;$('adviceList').innerHTML=stages.advice.map(x=>`<div class="advice-item"><span>✓</span>${x}</div>`).join(''); document.querySelectorAll('.traffic-light span').forEach((el,i)=>el.classList.toggle('active',i===stage-1)); $('quiz').style.display='none';$('result').style.display='block'; }
+    $('startBtn').onclick=()=>{$('features').style.display='none';$('home').style.display='none';$('check').style.display='block';render();window.scrollTo({top:0,behavior:'smooth'})};
+    $('nextBtn').onclick=()=>{if(current<questions.length-1){current++;render()}else showResult()}; $('backBtn').onclick=()=>{if(current>0){current--;render()}}; $('restartBtn').onclick=()=>{current=0;answers=Array(questions.length).fill(null);$('result').style.display='none';$('quiz').style.display='block';render()};
+    if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  </script>
+</body>
+</html>
