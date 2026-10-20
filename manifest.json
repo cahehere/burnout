@@ -1,0 +1,13 @@
+{
+  "name": "숨 고르기 - 직장인 번아웃 체크",
+  "short_name": "숨 고르기",
+  "description": "3분 안에 확인하는 직장인 번아웃 셀프 체크 서비스",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f8f7f2",
+  "theme_color": "#2f6251",
+  "lang": "ko-KR",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
